@@ -1,5 +1,8 @@
-package com.example.movieapp.activity
+package com.example.movieapp.activity.home
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.R
+import com.example.movieapp.activity.detail.DetailActivity
 import com.example.movieapp.model.ResultsItem
 
 class MovieAdapter(private val listMovie: ArrayList<ResultsItem>) :
@@ -37,6 +41,15 @@ class MovieAdapter(private val listMovie: ArrayList<ResultsItem>) :
         holder.release.text = "Release : ${data.releaseDate}"
         holder.bahasa.text = "Languange : ${data.originalLanguage}"
         holder.rate.text = "Rating :${data.voteAverage.toString()}"
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+            intent.putExtra("image", data.backdropPath)
+            intent.putExtra("bahasa", data.originalLanguage)
+            intent.putExtra("rate", data.voteAverage)
+            intent.putExtra("review", data.voteCount)
+            intent.putExtra("overview", data.overview)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount() = listMovie.size

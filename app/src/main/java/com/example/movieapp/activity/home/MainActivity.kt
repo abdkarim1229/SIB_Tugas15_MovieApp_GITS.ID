@@ -1,4 +1,4 @@
-package com.example.movieapp.activity
+package com.example.movieapp.activity.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,13 +14,44 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    val movieAdapterScroll = MovieAdapterScroll(arrayListOf())
     val movieAdapter = MovieAdapter(arrayListOf())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_main)
+        rv_scroll.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rv_scroll.adapter = movieAdapterScroll
+        getDataScroll()
+
         rv_movie.layoutManager = LinearLayoutManager(this)
         rv_movie.adapter = movieAdapter
         getDataMovie()
+    }
+
+    private fun getDataScroll() {
+        ApiService.endpoint.getMovie().enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { tampil(it) }
+                    val result = response.body()!!.results
+                    for (item in result!!) {
+                        detailMovie(item!!.id)
+
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "Gagal GET Data ${t}", Toast.LENGTH_LONG).show()
+            }
+
+        })
+    }
+
+    private fun tampil(data: MovieResponse) {
+        val result = data.results
+        movieAdapterScroll.setData(result as List<ResultsItem>)
     }
 
     private fun getDataMovie() {

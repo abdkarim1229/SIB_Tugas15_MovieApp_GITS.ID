@@ -43,11 +43,7 @@ class MovieAdapter(private val listMovie: ArrayList<ResultsItem>) :
         holder.rate.text = "Rating :${data.voteAverage.toString()}"
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("image", data.backdropPath)
-            intent.putExtra("bahasa", data.originalLanguage)
-            intent.putExtra("rate", data.voteAverage)
-            intent.putExtra("review", data.voteCount)
-            intent.putExtra("overview", data.overview)
+            intent.putExtra("movie_id", listMovie[position].id)
             holder.itemView.context.startActivity(intent)
         }
     }

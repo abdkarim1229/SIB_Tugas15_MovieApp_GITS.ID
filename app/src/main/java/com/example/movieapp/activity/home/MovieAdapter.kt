@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.R
 import com.example.movieapp.activity.detail.DetailActivity
+import com.example.movieapp.model.MovieResponse
 import com.example.movieapp.model.ResultsItem
 
 class MovieAdapter(private val listMovie: ArrayList<ResultsItem>) :
@@ -43,7 +44,7 @@ class MovieAdapter(private val listMovie: ArrayList<ResultsItem>) :
         holder.rate.text = "Rating :${data.voteAverage.toString()}"
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("movie_id", listMovie[position].id)
+            intent.putExtra("movie_id", listMovie[position].id.toString())
             holder.itemView.context.startActivity(intent)
         }
     }

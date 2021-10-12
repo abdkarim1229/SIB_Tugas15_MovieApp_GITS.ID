@@ -10,6 +10,4 @@ data class DetailMovieResponse(
     @SerializedName("vote_average") val vote_average: String,
     @SerializedName("vote_count") val vote_count: String,
     @SerializedName("backdrop_path") val backdrop_path: String
-) {
-
-}
+)

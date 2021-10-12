@@ -45,6 +45,7 @@
         android:fontFamily="@font/poppins"
         android:hint="Search . . ."
         android:padding="10dp"
+        android:textColor="#ACACAC"
         android:textColorHint="#ACACAC" />
 
     <TextView
